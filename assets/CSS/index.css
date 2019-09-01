@@ -2,10 +2,14 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-
+body{
+    position: relative;
+    height: 100vh;
+}
 header,footer{
     padding:2rem;
 }
+
 .users-list-title{
     background-image: linear-gradient(270deg,rgba(51,148,225,.18),transparent);
     background-color: #584475;
@@ -13,7 +17,7 @@ header,footer{
     padding:2rem;
 }
 .main-container{
-    position: absolute;
+    /* position: absolute; */
 }
 
 .content{
