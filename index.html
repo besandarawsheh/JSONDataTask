@@ -5,36 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="./assets/CSS/index.css">
     <title>Users</title>
 </head>
 <body>
     <header class="d-flex justify-content-center">
-            Header
+            Working with Json
     </header>
-    <div class="container-fluid">
-        <div class= "row">
-            <div class="col-3 lists-side">
-                <ul class="users-list">
-                    
+    <div class="container-fluid main-container">
+        <div class= "row content">
+            <div class="col-3 lists-side d-flex flex-column">
+                <ul class="users-list d-flex flex-column align-items-center w-100 align-self-start" id ="users-list">
+                  <li class="w-100">Users List</li>  
                 </ul><!-- users-list -->
-                <ul class="pagination">
-        
+                <ul class="pagination" id="pagination">
+                    <a  class=" "href="#" id="firstPage">&laquo;</a>
+                    <a  class="arrowLeft" id="prevPage"><i class="fa">&#xf104;</i></a>
+                    <a  class=" "href="#">1</a>
+                    <a  class=" "href="#">2</a>
+                    <a  class=" "href="#">3</a>
+                    <a  class="arrowRight" id="nextPage"><i class="fa" id="next">&#xf105;</i></a>
+                    <a  class=" "href="#" id="lastPage">&raquo;</a>
                 </ul><!-- pagination -->
             </div><!-- lists-side -->
-            <div class="col-6">
-
-            </div><!--users-data-table-->
-            <div class="col-3">
+            <table class="col-5 table table-striped" id="users-table">
+                <thead>
+                    <tr>
+                        <th>email</th>
+                        <th>first name</th>
+                        <th>last name</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- generated in javascript -->
+                </tbody>
+            </table><!--users-data-table-->
+            <div class="col-4">
 
             </div><!--map side -->
         </div><!--row div ends-->
     </div>
-    <footer>
+    <!-- <footer class="d-flex justify-content-center">
         Footer
-    </footer>
+    </footer> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./Javascript/index.js" defer></script>
 </body>
 </html>
