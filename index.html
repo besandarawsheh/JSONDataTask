@@ -9,49 +9,90 @@
     <link rel="stylesheet" type="text/css" href="./assets/CSS/index.css">
     <title>Users</title>
 </head>
-<body class="deep-purple-skin">
-    <header class="d-flex justify-content-center">
-            Working with JSON
-    </header>
+<body>
     <div class="container-fluid main-container">
-        <div class= "row content">
-            <div class="col-3 lists-side d-flex flex-column">
-                <ul class="users-list d-flex flex-column align-items-center w-100 align-self-start" id ="users-list">
-                  <li class="w-100">Users List</li>  
-                </ul><!-- users-list -->
-                <!--<ul class="pagination" id="pagination">
-                    <a  class=" "href="#" id="firstPage">&laquo;</a>
-                    <a  class="arrowLeft" id="prevPage"><i class="fa">&#xf104;</i></a>
-                    <a  class=" "href="#">1</a>
-                    <a  class=" "href="#">2</a>
-                    <a  class=" "href="#">3</a>
-                    <a  class="arrowRight" id="nextPage"><i class="fa" id="next">&#xf105;</i></a>
-                    <a  class=" "href="#" id="lastPage">&raquo;</a>
-                </ul> -->
-            </div><!-- lists-side -->
-            <table class="col-5 table table-striped" id="users-table">
-                <thead>
-                    <tr>
-                        <th>email</th>
-                        <th>first name</th>
-                        <th>last name</th>
-                    </tr>
-                </thead>
-                <tbody id="usersTableBody">
-                    <!-- generated in javascript -->
-                </tbody>
-            </table><!--users-data-table-->
-            <div class="col-4">
+        <div class="row">
+            <aside class="col-3 lists-side d-flex flex-column">
+                    <ul class="users-list d-flex flex-column align-items-center w-100 align-self-start" id ="users-list">
+                        <li class="w-100">Users List</li>  
+                    </ul>
+            </aside>
+            <div class="col-9 main-body">
+                <header class="d-flex justify-content-center">
+                        Working with<b>&nbsp; JSON</b>
+                </header>        
+                <div class= "row content">
+                    <!-- users-list -->
+                        <!-- -->
+                    <!-- </div>lists-side -->
+                    <!-- <div class="col-12 data-title">
+                        
+                        <b class="col-6">Users Locations</b>
+                    </div> -->
+                    <div class="col-7">
+                        <div class="data-title"><b>Users Data</b></div>
+                        <table class="table" id="users-table">
+                            <thead>
+                                <tr>
+                                    <th>email</th>
+                                    <th>first name</th>
+                                    <th>last name</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- generated in javascript -->
+                            </tbody>
+                        </table><!--users-data-table-->
+                    </div><!--table container-->
+                    <div class="col-5">
+                        <div class="data-title"><b>Users Locations</b></div>
+                        <div class="users-locations" id="map">
 
-            </div><!--map side -->
-        </div><!--row div ends-->
+                        </div>
+                    </div><!--map side -->
+                        <div class="col-12">
+                        <ul class="pagination d-flex" id="pagination">
+                            <li><a  class=" "href="#" id="firstPage">&laquo;</a></li>
+                            <li><a  class="arrowLeft" href="#" id="prevPage"><i class="fa">&#xf104;</i></a></li>
+                            <li><a  class=" "href="#" id="one">1</a></li>
+                            <li><a  class=" "href="#" id="two">2</a></li>
+                            <li><a  class=" "href="#" id="three">3</a></li>
+                            <li><a  class="arrowRight" href="#" id="nextPage"><i class="fa" id="next">&#xf105;</i></a></li>
+                            <li><a  class=" "href="#" id="lastPage">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div><!--row div ends-->
+                <footer class="d-flex justify-content-center">
+                    Footer
+                </footer>
+            </div>
+        </div><!-- row container-->
+    </div><!--container fluid-->
+    <div class="user-profile d-none flex-column" id="userProfile">
+        <h3>User Profile</h3>
+        <img src="" id="userImg">
+        <div class="d-flex space-between">
+            <span>Email:</span>
+            <a id="userEmail" href="mailto: "></a>
+        </div>
+        <div class="d-flex space-between">
+            <span>First Name:</span>
+            <span id="firstName"></span>
+        </div>
+        <div class="d-flex space-between">
+            <span>Last Name:</span>
+            <span id="lastName"></span>
+        </div>
+        <div class="d-flex space-between">
+            <span>Location</span>
+            <span id="userLocation"></span>
+        </div>
     </div>
-    <footer class="d-flex justify-content-center">
-        Footer
-    </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="./Javascript/index.js" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDag6YCXNDhMOL20MDM6NHg_Db_-xXCvGg&callback=initMap"
+    async defer></script>
 </body>
 </html>
