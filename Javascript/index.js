@@ -1,11 +1,10 @@
 window.addEventListener('load', function() {
     console.log('All assets are loaded');
-    
-    showTable(pagination.current_page,pagination.per_page).catch(error =>{ console.log(error);});
-    showMenu().catch(error=>console.log(error));
-    //let paginationLinks=document.getElementById(pagination);
+    //call async functions to run in parallel 
+    parallel();    
+    //showMenu().catch(error=>console.log(error));
     paginateLinks().catch(error => console.log(error));
-    //initMap().catch(error=>this.console.log(error));
+    initMap().catch(error=>console.log(error));
 });
 const apiURL="https://reqres.in/api/users";
 var map,displayedLocations=[];
@@ -30,6 +29,13 @@ var pagination={
     last_page:this.total_pages,
     max_shown_pages:3
 }//pagination
+var parallel = async () =>{
+    await Promise.all([
+        (async () => await showTable(pagination.current_page).catch(error =>{ console.log(error);}))(),
+        (async () => await showMenu().catch(error => this.console.log(error)))()
+    ]
+    );
+}//parallel
 async function showMenu(){
     let allUsers = await getUsersList("GET",`${apiURL}?per_page=12`);
     let allUsersList=JSON.parse(allUsers).data;
@@ -48,18 +54,18 @@ async function showMenu(){
         });
     }//for
 }//showMenu
-async function showTable (pageIndex,per_page){
-    let users = await getUsersList("GET",`${apiURL}?page=${pageIndex}&per_page=${per_page}`);
+async function showTable (pageIndex){
+    let users = await getUsersList("GET",`${apiURL}?page=${pageIndex}&per_page=${pagination.per_page}`);
     let usersObj=JSON.parse(users).data;
     let loader=document.getElementById("loader");
     loader.classList.add("hide-loader");
     let usersTable= document.getElementById("usersTableBody");
     let rows= usersTable.children;
-    console.log(usersObj);
-    for (x=0;x<per_page;x++) {
+    //console.log(usersObj);
+    for (x=0;x<pagination.per_page;x++) {
         let id= usersObj[x].id;
         var col1,col2,col3;
-        if (rows.length<=per_page){
+        if (rows.length<=pagination.per_page){
             var row = document.createElement('tr');
             row.id=`row-${x}`;
             col1 = document.createElement('td');
@@ -76,7 +82,7 @@ async function showTable (pageIndex,per_page){
             col1=document.getElementById(`col-1${x}`);
             col2=document.getElementById(`col-2${x}`);
             col3=document.getElementById(`col-3${x}`);
-            console.log(col1,col2,col3);
+            //console.log(col1,col2,col3);
         }//else
         col1.textContent=usersObj[x].email;
         col2.textContent=usersObj[x].first_name;
@@ -112,7 +118,8 @@ function getUsersList (method,url){
 function setLocations(){
     //let locations = await getUsersList("GET",apiURL);
     return new Promise( async function (resolve, reject) {
-        let users = await getUsersList("GET",`${apiURL}?page=${pagination.current_page}&per_page=4`);
+        console.log(pagination.current_page+"currentPage inside setlocations")
+        let users = await getUsersList("GET",`${apiURL}?page=${pagination.current_page}&per_page=${pagination.per_page}`);
         let usersObj =JSON.parse(users).data;
         let j=0;
         displayedLocations.length=0;
@@ -135,7 +142,7 @@ async function initMap(){
     let infowindow = new google.maps.InfoWindow({});
     map = new google.maps.Map(document.getElementById('map'));
     changeMapCenter(displayedLocations[0].location.lat,displayedLocations[0].location.lng,14);
-    console.log(map.getZoom());
+    //console.log(map.getZoom());
     //add markers to users locations
     var marker, x;
     for (x in displayedLocations) {
@@ -185,7 +192,7 @@ async function paginateLinks(){
     for (i=0;i<listItems.length;i++){
         (function(i){
             listItems[i].addEventListener("click",function(){
-            let index=pagination.current_page;
+            var index=pagination.current_page;
             //make prev page index not active
             var prevElement=document.getElementsByClassName("active-link");
             prevElement[0].classList.toggle("active-link");
@@ -197,9 +204,9 @@ async function paginateLinks(){
                     if(index==1){
                         break;
                     }
-                    showTable(1,4);
-                    initMap();
                     pagination.current_page=1;
+                    showTable(pagination.current_page);
+                    initMap();
                     break;
                 case "last":
                     var lastElem=document.getElementById("three");
@@ -207,9 +214,10 @@ async function paginateLinks(){
                     if(index==3){
                         break;
                     }
-                    showTable(3,4);
-                    initMap();
                     pagination.current_page=3;
+                    showTable(pagination.current_page);
+                    initMap();
+                    
                     break;
                 case "prevPage":
                     if(index==1){
@@ -217,11 +225,11 @@ async function paginateLinks(){
                         break;
                     }
                     listItems[index].classList.toggle("active-link");
-                    console.log(listItems[index].id+"Here I'm");
-                    showTable(listItems[index].textContent,4);
+                    pagination.current_page=index-1;
+                    showTable(pagination.current_page);
                     initMap();
                     //showPage(listItems[index].id);
-                    pagination.current_page=index-1;
+                    
                     break;
                 case "nextPage":
                         if(index==3){
@@ -230,17 +238,20 @@ async function paginateLinks(){
                         }
                         else{
                             listItems[index+2].classList.toggle("active-link");
-                            showTable(listItems[index+2].textContent,4);
+                            pagination.current_page=index+1;
+                            showTable(pagination.current_page);
                             initMap();
                             //showPage(listItems[index+2].id);
-                            pagination.current_page=index+1;
+                            
                         }
                     break;
 
                 default:
                     listItems[i].classList.toggle("active-link");
                     pagination.current_page=listItems[i].textContent;
-                    showTable(listItems[i].textContent,4);
+                    console.log(pagination.current_page);
+                    index = pagination.current_page;
+                    showTable(pagination.current_page);
                     initMap();
                     //showPage(listItems[i].id);
             }//switch
